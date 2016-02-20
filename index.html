@@ -16,6 +16,7 @@
   </table>
   <footer>
     
+      
       <div class='posts'></div>
 
       <div id='messagesDiv'></div>
@@ -28,26 +29,14 @@
           <option value="video">Video</option>
           <option value="podcast">Podcast</option>
       </select>
-      <input class="link" type="text" id="linkInput" placeholder="Send a link!">
+      
+      <input class="link" type="url" required placeholder="Send a link!" id="linkInput" > 
+
       
       
-    <table id="msges">
-        <tr>
-            <th>Submitter</th>
-            <th>Link</th>
-        </tr>
-    </table>
     <footer>
+
       
-    <input class="submitter" type="text" id="nameInput" placeholder="Enter your name">
-    <select>
-        <option value= null selected></option>
-        <option value="article">Article</option>
-        <option value="video">Video</option>
-        <option value="podcast">Podcast</option>
-     </select>
-    <input class="link" type="text" id="scoreInput" placeholder="Send a link!">
-    </footer>
 </div>
 
     <script>
@@ -57,11 +46,16 @@
         var myDataRef = new Firebase('keep-upp.firebaseIO.com');
       
         $('#send').click(function () {
-            var name = $('#nameInput').val();
-            var text = $('#linkInput').val();
+            
+            // Verify that link is valid
+            if ($("#linkInput")[0].checkValidity()) {
+                var name = $('#nameInput').val();
+                var text = $('#linkInput').val();
               
-            myDataRef.push({name: name, text: text});
-            $('#linkInput').val('');
+                myDataRef.push({name: name, text: text});
+                $('#linkInput').val('');
+            }
+           
 
         });
         
@@ -71,7 +65,7 @@
         });
       
         function displayChatMessage(name, text) {
-            $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+            $('<div/>').text(text).prepend($('<strong/>').text(name+': ')).appendTo($('#messagesDiv'));
             $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
         };
         
