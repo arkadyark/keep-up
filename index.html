@@ -14,8 +14,7 @@
       <th>Link</th>
     </tr>
   </table>
-  <footer>
-    
+  <footer>  
       
       <div class='posts'></div>
 
@@ -23,7 +22,7 @@
       <input class="submitter" type="text" id="nameInput" placeholder="Enter your name">
       <button id="send" type="button">Send</button> <br>
 
-      <select>
+      <select id='inputType'>
           <option value= null selected>Content Type</option>
           <option value="article">Article</option>
           <option value="video">Video</option>
@@ -32,18 +31,12 @@
       
       <input class="link" type="url" required placeholder="Send a link!" id="linkInput" > 
 
-      
-      
-    <footer>
-
-      
 </div>
 
     <script>
-  // Create our Firebase reference
-    var scoreListRef = new Firebase('https://keep-up.firebaseio.com/');
-    
-        var myDataRef = new Firebase('keep-upp.firebaseIO.com');
+        
+        // Create our Firebase reference    
+        var myDataRef = new Firebase('keep-up.firebaseIO.com');
       
         $('#send').click(function () {
             
@@ -51,17 +44,16 @@
             if ($("#linkInput")[0].checkValidity()) {
                 var name = $('#nameInput').val();
                 var text = $('#linkInput').val();
+                var type = $('#typeInput').val();
               
-                myDataRef.push({name: name, text: text});
+                myDataRef.push({name: name, text: text, type: type});
                 $('#linkInput').val('');
             }
-           
-
         });
         
         myDataRef.on('child_added', function(snapshot) {
             var message = snapshot.val();
-            displayChatMessage(message.name, message.text);
+            displayChatMessage(message.name, message.link);
         });
       
         function displayChatMessage(name, text) {
