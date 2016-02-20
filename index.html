@@ -14,24 +14,47 @@
     </tr>
   </table>
   <footer>
+    
+      <div class='posts'></div>
+
+      <div id='messagesDiv'></div>
+      <input class="submitter" type="text" id="nameInput" placeholder="Enter your name">
+      <button id="send" type="button">Send</button> <br>
+
+      <select>
+          <option value= null selected>Content Type</option>
+          <option value="article">Article</option>
+          <option value="video">Video</option>
+          <option value="podcast">Podcast</option>
+      </select>
+      <input class="link" type="text" id="linkInput" placeholder="Send a link!">
       
-    <input class="submitter" type="text" id="nameInput" placeholder="Enter your name">
-    <select>
-        <option value= null selected></option>
-        <option value="article">Article</option>
-        <option value="video">Video</option>
-        <option value="podcast">Podcast</option>
-    </select>
-    <input class="link" type="text" id="scoreInput" placeholder="Send a link!">
-  </footer>
+      
+    </footer>
 </div>
-<script>
 
-  // Create our Firebase reference
-  var scoreListRef = new Firebase('https://keep-up.firebaseio.com/');
+    <script>
     
-    
+        var myDataRef = new Firebase('keep-upp.firebaseIO.com');
+      
+        $('#send').click(function () {
+            var name = $('#nameInput').val();
+            var text = $('#linkInput').val();
+              
+            myDataRef.push({name: name, text: text});
+            $('#linkInput').val('');
 
-
-</script>
+        });
+        
+        myDataRef.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            displayChatMessage(message.name, message.text);
+        });
+      
+        function displayChatMessage(name, text) {
+            $('<div/>').text(text).prepend($('<em/>').text(name+': ')).appendTo($('#messagesDiv'));
+            $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+        };
+        
+    </script>
 </body>
