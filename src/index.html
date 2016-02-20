@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Keep-up</title>
+  </head>
+  <style media="screen">
+    body {
+      text-align: center;
+    }
+    .box {
+      border : solid thin;
+      text-align: center;
+      padding: 20px;
+    }
+
+    #fb-button {
+      cursor: pointer;
+    }
+  </style>
+  <body>
+    <h1>keep-up</h1>
+    <div class="box">
+      <h2>Login</h2>
+      <img id="fb-button" src="https://facebookbrand.com/img/assets/asset.f.logo.lg.png" alt="" />
+    </div>
+  </body>
+  <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+  <script>
+    var ref = new Firebase("https://keep-up.firebaseio.com");
+    $("#fb-button").click(function() {
+      ref.authWithOAuthPopup("facebook", function(error, authData) {
+        if (error) {
+          console.log("Login Failed!", error);
+        } else {
+          console.log("Authenticated successfully with payload:", authData);
+          var id = authData.facebook.id;
+          var token = authData.facebook.accessToken;
+          $.getJSON('https://graph.facebook.com/'+ id +'/friends?access_token='+token+'', function(data) {
+              console.log(data);
+          })
+        }
+      },
+      {
+        scope: "email,public_profile,user_friends"
+      });
+    })
+  </script>
+</html>
