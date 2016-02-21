@@ -36,13 +36,14 @@
             <p class="preview-description" id="preview-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.</p>
           </div>
         </div>
+      </div>
         <div class="row send-to">
           <div class="six columns">
             <form>
               <label for="exampleEmailInput">Send to:</label>
               <input class="u-full-width" type="email" placeholder="Enter a friend..." id="exampleEmailInput">
               <label for="exampleEmailInput">Add some tags:</label>
-              <input class="u-full-width" type="email" placeholder="Start typing..." id="exampleEmailInput">
+              <input class="u-full-width" type="email" placeholder="Start typing..." id="tagsInput">
             </form>
           </div>
           <div class="six columns added-friends">
@@ -130,6 +131,14 @@
         </div> <!-- Article 3 -->
       </div>
     </div> <!-- .container -->
+
+
+
+    <script type="text/javascript">
+    $(document).ready(function() {
+    $("#tagsInput").tagit();
+    });
+</script>
   </body>
   <script src="thirtyhours.js" charset="utf-8"></script>
 </html>
