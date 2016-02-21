@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="./css/skeleton.css" media="screen" title="no title" charset="utf-8">
     <link rel="stylesheet" href="./css/design.css" media="screen" title="no title" charset="utf-8" >
     <link rel="shortcut icon" type="image/png" href="res/favicon.png"/>
+      
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
+    
+    <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
+    <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css">  
+      
   </head>
   <body>
     <div class="container">
@@ -39,7 +47,7 @@
             <label for="exampleEmailInput">Send to:</label>
             <input class="u-full-width" type="email" placeholder="Enter a friend..." id="exampleEmailInput">
             <label for="exampleEmailInput">Add some tags:</label>
-            <input class="u-full-width" type="email" placeholder="Start typing..." id="exampleEmailInput">
+            <input class="u-full-width" type="email" placeholder="Start typing..." id="tagsInput">
           </form>
         </div>
         <div class="six columns added-friends">
@@ -126,5 +134,13 @@
         </div> <!-- Article 3 -->
       </div>
     </div> <!-- .container -->
+      
+      
+      
+    <script type="text/javascript">
+    $(document).ready(function() {
+    $("#tagsInput").tagit();
+    });
+</script>
   </body>
 </html>
