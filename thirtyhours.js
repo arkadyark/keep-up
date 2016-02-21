@@ -1,4 +1,5 @@
 $("#linkInput").keyup(function() {
+  console.log("KEYUPPPP")
   link = $("#linkInput").val()
   var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
   var regex = new RegExp(expression);
@@ -8,13 +9,13 @@ $("#linkInput").keyup(function() {
     }
     link = encodeURIComponent(encodeURIComponent(link))
     $.get("http://localhost:8080/preview/" + link, function(data) {
+      data = JSON.parse(data)
       $("#share-details").show()
       console.log(data)
-      $("#preview-title").text(data.title)
-      console.log("Changed the title")
-      console.log($("#preview-title").text())
-      $("#preview-description").text(data.description)
-      console.log("Changed the description")
+      console.log(data["title"])
+      console.log(data.title)
+      document.getElementById("preview-title").innerHTML = data.title
+      document.getElementById("preview-description").innerHTML = data.description
       $("#preview-image").attr("src", data.image_link)
     })
   }
