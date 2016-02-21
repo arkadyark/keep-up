@@ -1,0 +1,74 @@
+.telegram-rich {
+    border: 1px solid #adc9bb;
+    background: #e1ffc7;
+    border-radius: 15px;
+    width: 500px;
+    min-height: 155px;
+    font-size: 18px;
+    padding: 15px;
+    margin-bottom: 40px
+}
+
+@media(max-width:768px) {
+    .telegram-rich {
+        width: 100%;
+        font-size: 12px
+    }
+}
+
+.telegram-rich .brand {
+    float: right;
+    width: 100px;
+    height: 100px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-left: 25px;
+    border-radius: 15px
+}
+
+@media(max-width:768px) {
+    .telegram-rich .brand {
+        width: 100px;
+        height: 100px
+    }
+}
+
+.telegram-rich .pagename {
+    color: #1cb219;
+    display: block;
+    line-height: 20px;
+    margin-bottom: 5px;
+    font-weight: 600
+}
+
+.telegram-rich .titel {
+    color: #000;
+    display: block;
+    line-height: 20px;
+    margin-bottom: 5px;
+    font-weight: 600
+}
+
+.telegram-rich .description {
+    color: #000;
+    display: block;
+    line-height: 20px
+}
+
+.telegram-rich .url {
+    display: block;
+    margin-bottom: 10px;
+    line-height: 1
+}
+
+.telegram-rich .url a {
+    color: #044ead !important;
+    font-size: 14px;
+    text-decoration: underline
+}
+
+.telegram-rich .telegram-border {
+    border-left: 3px solid #1cb219;
+    padding: 0 10px
+}

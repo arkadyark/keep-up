@@ -7,31 +7,58 @@
 <body>
 
 <div class="INBOX">
-    <table id="msges">
-        <tr>
-            <th>Submitter</th>
-            <th>Link</th>
-        </tr>
-    </table>
-    <footer>
+    
+  <table id="msges">
+    <tr>
+      <th>Submitter</th>
+      <th>Link</th>
+    </tr>
+  </table> 
       
-    <input class="submitter" type="text" id="nameInput" placeholder="Enter your name">
-    <select>
-        <option value= null selected></option>
-        <option value="article">Article</option>
-        <option value="video">Video</option>
-        <option value="podcast">Podcast</option>
-    </select>
-    <input class="link" type="text" id="scoreInput" placeholder="Send a link!">
-    </footer>
+      <div class='posts'></div>
+
+      <div id='messagesDiv'></div>
+      <input class="submitter" type="text" id="nameInput" placeholder="Enter your name">
+      <button id="send" type="button">Send</button> <br>
+
+      <select id='inputType'>
+          <option value= null selected>Content Type</option>
+          <option value="article">Article</option>
+          <option value="video">Video</option>
+          <option value="podcast">Podcast</option>
+      </select>
+      
+      <input class="link" type="url" required placeholder="Send a link!" id="linkInput" > 
+
 </div>
-<script>
 
-  // Create our Firebase reference
-    var scoreListRef = new Firebase('https://keep-up.firebaseio.com/');
-    
-    
-
-
-</script>
+    <script>
+        
+        // Create our Firebase reference    
+        var myDataRef = new Firebase('keep-up.firebaseIO.com');
+      
+        $('#send').click(function () {
+            
+            // Verify that link is valid
+            if ($("#linkInput")[0].checkValidity()) {
+                var name = $('#nameInput').val();
+                var text = $('#linkInput').val();
+                var type = $('#typeInput').val();
+              
+                myDataRef.push({name: name, text: text, type: type});
+                $('#linkInput').val('');
+            }
+        });
+        
+        myDataRef.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            displayChatMessage(message.name, message.link);
+        });
+      
+        function displayChatMessage(name, text) {
+            $('<div/>').text(text).prepend($('<strong/>').text(name+': ')).appendTo($('#messagesDiv'));
+            $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+        };
+        
+    </script>
 </body>

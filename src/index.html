@@ -17,34 +17,50 @@
     #fb-button {
       cursor: pointer;
     }
+
+    #dashboard {
+      display: none;
+    }
+
+    #friends {
+      list-style: none;
+      padding: 0;
+    }
+
+    #friends li {
+      cursor: pointer;
+    }
+
+    .sent-by-me {
+      color : red;
+    }
+
+    .sent-by-other {
+      color : lightblue;
+    }
   </style>
   <body>
     <h1>keep-up</h1>
-    <div class="box">
+    <div class="box" id="login">
       <h2>Login</h2>
       <img id="fb-button" src="https://facebookbrand.com/img/assets/asset.f.logo.lg.png" alt="" />
+    </div>
+    <div id="dashboard">
+      <ul id="friends">
+      </ul>
+      <div id="friendship">
+      </div>
     </div>
   </body>
   <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
   <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-  <script>
+  <script type="text/javascript">
+    var userID;
+    var userToken;
     var ref = new Firebase("https://keep-up.firebaseio.com");
-    $("#fb-button").click(function() {
-      ref.authWithOAuthPopup("facebook", function(error, authData) {
-        if (error) {
-          console.log("Login Failed!", error);
-        } else {
-          console.log("Authenticated successfully with payload:", authData);
-          var id = authData.facebook.id;
-          var token = authData.facebook.accessToken;
-          $.getJSON('https://graph.facebook.com/'+ id +'/friends?access_token='+token+'', function(data) {
-              console.log(data);
-          })
-        }
-      },
-      {
-        scope: "email,public_profile,user_friends"
-      });
-    })
   </script>
+  <script src="login.js"></script>
+
+  </script>
+
 </html>
