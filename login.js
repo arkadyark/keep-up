@@ -1,6 +1,7 @@
 var friendsAdded = false;
 var friendsAddedList = [];
 var friends = {};
+var idsToNames = {};
 var friendsAutocomplete = [];
 var allFriends = [];
 
@@ -9,7 +10,6 @@ $("#fb-button").click(function() {
     if (error) {
       console.log("Login Failed!", error);
     } else {
-      console.log("Authenticated successfully with payload:", authData);
       userID = authData.uid;
       facebookID = authData.facebook.id;
       userToken = authData.facebook.accessToken;
@@ -24,6 +24,15 @@ $("#fb-button").click(function() {
       $("#login").hide();
       $("#container").show();
 
+      $.getJSON('https://graph.facebook.com/'+ facebookID +'/friends?access_token='+userToken+'', function(data) {
+          $.each(data.data, function(index, value) {
+            allFriends.push(value.name)
+            friends[value.name] = value.id;
+            idsToNames["facebook:" + value.id] = value.name;
+          })
+          populateRecentlyShared();
+      })
+
       // Populate friends list
       $("#friendsInput").autocomplete({
         source: function(req, res) {
@@ -33,9 +42,6 @@ $("#fb-button").click(function() {
           $.getJSON('https://graph.facebook.com/'+ facebookID +'/friends?access_token='+userToken+'', function(data) {
               $.each(data.data, function(index, value) {
                 friendsAutocomplete.push(value.name)
-                allFriends.push(value.name)
-                friends[value.name] = value.id;
-                $("#friends-list").append($("<li id=facebook:" + value.id + ">" + value.name + "</li>"))
               })
               res(friendsAutocomplete)
           })
@@ -68,3 +74,57 @@ function updateButton() {
     button.prop('disabled', true)
   }
 }
+
+function populateRecentlyShared() {
+      // Get recently-shared
+      var DataRef = new Firebase('https://keep-up.firebaseio.com/users/');
+      var login_user = DataRef.child(userID + "/recently-shared");
+
+      // Find relevant posts - snapshot to loop over users
+      login_user.once("value", function(snapshot) {
+
+          // Grab the child's info
+          snapshot.forEach(function(childSnapshot) {
+              var attributes = childSnapshot.val();
+              appendArticleDiv(attributes["title"], attributes["description"], attributes['link'], idsToNames[attributes["sender"]]);
+          })
+      })
+}
+
+function appendArticleDiv(title, description, url, sender) {
+
+    var newLink = $('<a/>');
+    $(newLink).attr("target", "_blank")
+    $(newLink).attr("href", url);
+
+    // Prep div + p tags
+    var newArticle = $('<div/>');
+    newArticle.addClass("article");
+    newArticle.addClass("nine");
+    newArticle.addClass("columns")
+
+    var newTitle = $('<p/>');
+    var newDescription = $('<p/>');
+
+    newTitle.addClass("article-title");
+    newDescription.addClass("article-author");
+
+    // Load the info in
+    newTitle.text(title);
+    newDescription.text(description);
+
+    // Append the p's -> div and div -> page
+    newTitle.appendTo(newArticle);
+    newDescription.appendTo(newArticle);
+
+    newArticle.appendTo(newLink);
+
+    newLink.appendTo($("#recent_articles"));
+
+
+    sentBy = $("<div class='three columns'><div class='collaborators'><p>Shared by:</p></div><div class='collaborators names'><p><a href='#'>" +
+              sender
+                + "</a></p></div></div></div>"
+              )
+    sentBy.appendTo($("#recent_articles"))
+  };

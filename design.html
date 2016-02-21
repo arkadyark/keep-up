@@ -68,26 +68,10 @@
       </div>
       <hr>
       <div>
-        <form>
-            <label for="exampleEmailInput">My friends:</label>
-        </form>
-        <div id="friends-list" class="row">
-        </div>
-      </div>
-      <hr>
-      <div>
         <form class="discuss-further">
             <label for="exampleEmailInput">Discuss further:</label>
         </form>
-        <div class="row"> <!-- Article 1 -->
-          <div class="article-row">
-            <div class="nine columns">
-              <div class="article">
-                <p class="article-title">No Apology</p>
-                <p class="article-author">by Jessica Pishko on aeon.co</p>
-              </div>
-            </div>
-            <div class="three columns">
+            <!--<div class="three columns">
               <div class="collaborators">
                 <p>With:</p>
               </div>
@@ -96,46 +80,8 @@
                 <p><a href="#">Arkady Arkhangorodsky</a></p>
               </div>
             </div>
-          </div>
-        </div> <!-- Article 1 -->
+          </div>-->
         <div id="recent_articles"> <!--Target to add new divs via Firebase -->
-            <div class="row"> <!-- Article 2 -->
-              <div class="article-row">
-                <div class="nine columns">
-                  <div class="article">
-                    <p class="article-title">The Female Pilots We Betrayed</p>
-                    <p class="article-author">by Sarah Byrn Rickman on NYTimes</p>
-                  </div>
-                </div>
-                <div class="three columns">
-                  <div class="collaborators">
-                    <p>With:</p>
-                  </div>
-                  <div class="collaborators names">
-                    <p><a href="#">Soheil Koushan</a>,</p>
-                    <p><a href="#">Paul Suk</a></p>
-                  </div>
-                </div>
-              </div>
-            </div> <!-- Article 2 -->
-            <div class="row"> <!-- Article 3 -->
-              <div class="article-row">
-                <div class="nine columns">
-                  <div class="article">
-                    <p class="article-title">Air Force One</p>
-                    <p class="article-author">On wikipedia.org</p>
-                  </div>
-                </div>
-                <div class="three columns">
-                  <div class="collaborators">
-                    <p>With:</p>
-                  </div>
-                  <div class="collaborators names">
-                    <p><a href="#">Arkady Arkhangorodsky</a></p>
-                  </div>
-                </div>
-              </div>
-            </div> <!-- Article 3 -->
         </div>
       </div>
     </div> <!-- .container -->
@@ -187,7 +133,7 @@
         $("#tagsInput").tagit('removeAll')
         $("#friendsInput").val('')
         $("#friendsInput").autocomplete("option","source",allFriends);
-        $("#added-friends").empty()  
+        $("#added-friends").empty()
     });
     </script>
 
@@ -205,51 +151,5 @@
   </script>
   <script src="login.js"></script>
   <script src="thirtyhours.js" charset="utf-8"></script>
-
- <!-- Update to-read articles -->
-<script>
-
-    // Reference
-    var DataRef = new Firebase('https://keep-up.firebaseio.com/users/');
-    var login_user = DataRef.child(userID + "/recently-shared");
-
-    // Find relevant posts - snapshot to loop over users
-    login_user.once("value", function(snapshot)) {
-
-        // Grab the child's info
-        snapshot.forEach(function(childSnapshot)) {
-            var attributes = childSnapshot.val();
-            appendArticleDiv(attributes["title"], attributes["description"], attributes['link']);
-        }
-    }
-
-    function appendArticleDiv(title, description, url) {
-
-        var newLink = ${'<a/>'};
-        $(newLink).attr("href", url);
-
-        // Prep div + p tags
-        var newArticle = $('<div/>');
-        newArticle.addClass("article");
-
-        var newTitle = $('<p/>');
-        var newDescription = $('<p/>');
-
-        newTitle.addClass("article-title");
-        newDescription.addClass("article-author");
-
-        // Load the info in
-        newTitle.text(article);
-        newDescription.text(title);
-
-        // Append the p's -> div and div -> page
-        newTitle.appendTo(newArticle);
-        newDescription.appendTo(newArticle);
-
-        newArticle.appendTo(newLink);
-
-        newLink.appendTo($("#recent_articles"));
-      };
-</script>
 
 </html>
