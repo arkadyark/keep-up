@@ -21,8 +21,13 @@
 
   </head>
   <body>
-    <div class="container">
-      <h1 id="title">keep-up</h1>
+    <h1 id="title">keep-up</h1>
+    <div id="login" class="login">
+      <hr>
+      <h2>Login</h2>
+      <img id="fb-button" src="https://facebookbrand.com/img/assets/asset.f.logo.lg.png" alt="" />
+    </div>
+    <div id="container" class="container">
       <form class="enter-link">
         <div class="row">
           <label for="exampleEmailInput">Start something</label>
@@ -40,41 +45,27 @@
           </div>
         </div>
       </div>
-      <div class="row">
-
-      </div>
       <div class="row send-to">
         <div class="six columns">
           <form>
             <label for="exampleEmailInput">Send to:</label>
-            <input class="u-full-width" type="email" placeholder="Enter a friend..." id="exampleEmailInput">
+            <input class="u-full-width" type="text" placeholder="Enter a friend..." id="friendsInput">
+            <div id="autocomplete-menu"></div>
             <label for="exampleEmailInput">Add some tags:</label>
-            <input class="u-full-width" type="email" placeholder="Start typing..." id="tagsInput">
+            <input class="u-full-width" type="text" placeholder="Start typing..." id="tagsInput">
           </form>
         </div>
         <div class="six columns added-friends">
           <form>
             <label for="exampleEmailInput">Added friends:</label>
             <div>
-              <div>
-                <div>
-                  <p><i class="fa fa-times"></i>Arkady Arkhangorodsky</p>
-                </div>
-                <div>
-                  <p><i class="fa fa-times"></i>Kasra Koushan</p>
-                </div>
-                <div>
-                  <p><i class="fa fa-times"></i>Paul Suk</p>
-                </div>
+              <div id="added-friends">
               </div>
-              <button class="send-to-selected">Send link to 3 friends <i class="fa fa-arrow-right"></i></button>
+              <button id="send-button" disabled class="send-to-selected">Send link to friend(s) <i class="fa fa-arrow-right"></i></button>
             </form>
           </div>
         </div>
       </div>
-      <!-- <div class="row">
-        <button class="send-to-selected">Send link to 3 friends <i class="fa fa-arrow-right"></i></button>
-      </div> -->
       <hr>
       <div>
         <form class="discuss-further">
@@ -138,14 +129,17 @@
         </div> <!-- Article 3 -->
       </div>
     </div> <!-- .container -->
-
-
-
     <script type="text/javascript">
     $(document).ready(function() {
     $("#tagsInput").tagit();
     });
 </script>
   </body>
+  <script>
+    var userID;
+    var userToken;
+    var ref = new Firebase("https://keep-up.firebaseio.com");
+  </script>
+  <script src="login.js"></script>
   <script src="thirtyhours.js" charset="utf-8"></script>
 </html>

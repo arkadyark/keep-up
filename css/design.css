@@ -6,7 +6,25 @@ body {
   display: none;
 }
 
+.login {
+  text-align: center;
+}
+
+#fb-button {
+  width : 68px;
+  cursor: pointer;
+}
+
+#autocomplete-menu {
+  position: relative;
+}
+
+.ui-autocomplete {
+  margin-top: -16px !important;
+}
+
 .container {
+  display: none;
   max-width: 700px;
 }
 
