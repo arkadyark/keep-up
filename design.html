@@ -14,6 +14,8 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
   	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/start/jquery-ui.css" />
+    <script type="text/javascript" src="jquery.tagsinput.js" ></script>
+    <link rel="stylesheet" type="text/css" href="jquery.tagsinput.css" />
     <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
@@ -54,30 +56,6 @@
             <label for="exampleEmailInput">Add some tags:</label>
             <input class="u-full-width" type="text" placeholder="Start typing..." id="tagsInput">
           </form>
-
-          <script>
-          // Grab Firebase Reference
-          var myDataRef = new Firebase('keep-up.firebaseIO.com');
-
-          $('#send').click(function () {
-              console.log($('#tagsInput').val());
-              // Verify that link is valid
-
-
-              if ($("#linkInput")[0].checkValidity()) {
-                  var link = $('#linkInput').val();
-
-                  myDataRef.push($('#tagsInput').tagit('assignedTags'));
-
-                  $('#linkInput').val('');
-              }
-          });
-
-          myDataRef.on('child_added', function(snapshot) {
-              var message = snapshot.val();
-          });
-          </script>
-
         </div>
         <div class="six columns added-friends">
           <form>
@@ -161,10 +139,32 @@
         </div> <!-- Article 3 -->
       </div>
     </div> <!-- .container -->
+
+    <!-- Handle Tags -->
+    <script>
+
+    // Grab Firebase Reference
+    var myDataRef = new Firebase('https://keep-up.firebaseio.com/users/facebook%3A10154007199015712');
+
+    $('#send-button').click(function () {
+
+        // Grab URL
+        var link = $("#linkInput").val();
+
+        // Set the new link reference
+        myDataRef.push({"friends":link});
+
+        var newChild = myDataRef.child("friends");
+
+        newChild.push({date: Date(), sender: "dummy", tags: $("#tagsInput").tagit("assignedTags")});
+    });
+    </script>
+
     <script type="text/javascript">
     $(document).ready(function() {
     $("#tagsInput").tagit();
     });
+
 </script>
   </body>
   <script>

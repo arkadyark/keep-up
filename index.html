@@ -59,7 +59,7 @@
                 var text = $('#linkInput').val();
                 var type = $('#typeInput').val();
 
-                myDataRef.push({name: name, text: text, type: type});
+                var child = myDataRef.push({name: name, text: text, type: type});
                 $('#linkInput').val('');
             }
         });
