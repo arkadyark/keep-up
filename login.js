@@ -4,6 +4,7 @@ var friends = {};
 var idsToNames = {};
 var friendsAutocomplete = [];
 var allFriends = [];
+var recentArticles = [];
 
 $("#fb-button").click(function() {
   ref.authWithOAuthPopup("facebook", function(error, authData) {
@@ -32,6 +33,20 @@ $("#fb-button").click(function() {
           })
           populateRecentlyShared();
       })
+
+      $("#searchInput").keyup(function () {
+
+          var query = $("#searchInput").val();
+
+          filtered = []
+          recentArticles.each(function(index, value) {
+              if ($(value).attr("search-tags").indexOf(query) != -1) {
+                  filtered.push(value.outerHTML)
+              }
+          })
+          $("#recent_articles").html(filtered.join(''))
+
+      });
 
       // Populate friends list
       $("#friendsInput").autocomplete({
@@ -86,12 +101,14 @@ function populateRecentlyShared() {
           // Grab the child's info
           snapshot.forEach(function(childSnapshot) {
               var attributes = childSnapshot.val();
-              appendArticleDiv(attributes["title"], attributes["description"], attributes['link'], idsToNames[attributes["sender"]]);
+              tags = (attributes["tags"] == undefined ? [] : attributes["tags"])
+              appendArticleDiv(attributes["title"], attributes["description"], attributes['link'], idsToNames[attributes["sender"]], tags);
           })
+          recentArticles = $("#recent_articles .article-row")
       })
 }
 
-function appendArticleDiv(title, description, url, sender) {
+function appendArticleDiv(title, description, url, sender, tags) {
 
     var newLink = $('<a/>');
     $(newLink).attr("target", "_blank")
@@ -119,12 +136,18 @@ function appendArticleDiv(title, description, url, sender) {
 
     newArticle.appendTo(newLink);
 
-    newLink.appendTo($("#recent_articles"));
-
-
     sentBy = $("<div class='three columns'><div class='collaborators'><p>Shared by:</p></div><div class='collaborators names'><p><a href='#'>" +
               sender
                 + "</a></p></div></div></div>"
               )
-    sentBy.appendTo($("#recent_articles"))
+
+    var articleRow = $("<div/>")
+    articleRow.addClass("article-row")
+
+    articleRow.append(newArticle);
+    articleRow.append(sentBy);
+
+    articleRow.attr("search-tags", title + " " + description + " " + tags.join(" "));
+
+    articleRow.appendTo($("#recent_articles"));
   };
