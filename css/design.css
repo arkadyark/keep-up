@@ -1,0 +1,101 @@
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.container {
+  max-width: 700px;
+}
+
+#title {
+  text-align: center;
+  margin-top: 60px;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  border-radius: 3px;
+}
+
+.preview-title {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.preview-date {
+  font-size: 18px;
+}
+
+.enter-link {
+  margin-bottom: 0px;
+}
+
+.send-to {
+  margin-top: 30px;
+}
+
+.added-friends p {
+  margin-bottom: 5px;
+}
+
+.fa-times {
+  margin-right: 20px;
+}
+
+p {
+  margin: 0px;
+}
+
+.article {
+  background-color: rgba(202, 202, 202, 0.2);
+  border-radius: 3px;
+  border:  1px solid #B9B9B9;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-bottom: 10px;
+}
+
+.collaborators {
+  text-align: right;
+  font-size: 12px;
+}
+
+.collaborators-names {
+  text-align: right;
+}
+
+.discuss-further {
+  margin-bottom: 0px;
+}
+
+.article-title {
+  font-size: 20px;
+}
+
+.article-author {
+  font-style: italic;
+  font-size: 16px;
+}
+
+.article-row {
+  margin-bottom: 10px;
+  display: inline-block;
+  width: 100%;
+}
+
+label {
+  text-transform: uppercase;
+}
+
+.collaborators {
+  text-transform: uppercase;
+}
+
+.send-to-selected {
+  margin-top: 10px;
+  float: right;
+}
+
+.tags-input {
+  margin-top: 30px;
+}

@@ -1,18 +1,88 @@
 <html>
-  <head>    
-      <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
-      <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
-    </head>
 
-  <body>
-      
-    <div id='messagesDiv'></div>
-      
-    <input type='text' id='nameInput' placeholder='Name'> <button id="send" type="button">Send</button> <br>
-    <input type='text' id='messageInput' placeholder='Link'>
+<head>
+    <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        
     
-    <button id="test"></button>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
+	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/start/jquery-ui.css" />
+    <script type="text/javascript" src="jquery.tagsinput.js" ></script>
+    <link rel="stylesheet" type="text/css" href="jquery.tagsinput.css" />
+
+
+</head>
+<body>
+
+<div class="INBOX">
     
+  <table id="msges">
+    <tr>
+      <th>Submitter</th>
+      <th>Link</th>
+    </tr>
+  </table> 
       
-  </body>
+        <div class='posts'></div>
+
+        <div id='messagesDiv'></div>
+        <input class="submitter" type="text" id="nameInput" placeholder="Enter your name">
+        <button id="send" type="button">Send</button> <br>
+
+        <select id='inputType'>
+            <option value= null selected>Content Type</option>
+            <option value="article">Article</option>
+            <option value="video">Video</option>
+            <option value="podcast">Podcast</option>
+        </select>
+      
+        <input class="link" type="url" required placeholder="Send a link!" id="linkInput" > 
+        <br>
+            <label>Add Some Tags!</label>
+            <input id="tagsInput" type="text" class="tags" style="display: none;">
+            <div id="tags_tagsinput" style="width: auto; min-height:100px;">
+                <div class="tags_clear"></div>    
+            </div>
+
+</div>
+
+    <script>
+        // Create our Firebase reference    
+        var myDataRef = new Firebase('keep-up.firebaseIO.com');
+      
+        $('#send').click(function () {
+            console.log($('#tagsInput').val());
+            // Verify that link is valid
+            if ($("#linkInput")[0].checkValidity()) {
+                var name = $('#nameInput').val();
+                var text = $('#linkInput').val();
+                var type = $('#typeInput').val();
+              
+                myDataRef.push({name: name, text: text, type: type});
+                $('#linkInput').val('');
+            }
+        });
+        
+        myDataRef.on('child_added', function(snapshot) {
+            var message = snapshot.val();
+            displayChatMessage(message.name, message.link);
+        });
+      
+        function displayChatMessage(name, text) {
+            $('<div/>').text(text).prepend($('<strong/>').text(name+': ')).appendTo($('#messagesDiv'));
+            $('#messagesDiv')[0].scrollTop = $('#messagesDiv')[0].scrollHeight;
+        };
+    </script>
+    
+    <script type="text/javascript">
+        $(function() {       
+            $('#tagsInput').tagsInput({
+                width: 'auto', 
+                autocomplete_url:'/plaintext_tags_endpoint.html'
+            })
+        });
+    </script>
+    
+</body>
 </html>
