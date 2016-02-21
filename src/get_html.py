@@ -9,9 +9,13 @@ def enable_cors():
 
 @bottle.route('/preview/<url>')
 def index(url):
+
+    # Grab source
     url = urllib2.unquote(url).decode('utf8')
     full_url = url_base + ('?url=https://' + url).encode('utf8')
     response = urllib2.urlopen(full_url).read()
+
+    # Encoded -> parse elements out of the snippet
     soup = BeautifulSoup(response)
     snippet = soup.findAll("div", class_="telegram-rich")[0]
     title = snippet.findAll("span", class_="titel")[0].text
@@ -20,6 +24,7 @@ def index(url):
     image_link = snippet.findAll("span", class_="brand")[0]['style']
     image_link = image_link[image_link.find(':'):].split("'")[1]
 
+    # Dump everything for an easy return
     return json.dumps({
         'title' : title,
         'description' : description,
