@@ -11,6 +11,7 @@ $("#linkInput").keyup(function() {
     $.get("http://localhost:8080/preview/" + link, function(data) {
       data = JSON.parse(data)
       $("#share-details").show()
+      $("#send-to").show()
       document.getElementById("preview-title").innerHTML = data.title
       document.getElementById("preview-description").innerHTML = data.description
       $("#preview-image").attr("src", data.image_link)

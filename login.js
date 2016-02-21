@@ -1,6 +1,8 @@
 var friendsAdded = false;
+var friendsAddedList = [];
 var friends = {};
 var friendsAutocomplete = [];
+var allFriends = [];
 
 $("#fb-button").click(function() {
   ref.authWithOAuthPopup("facebook", function(error, authData) {
@@ -26,10 +28,12 @@ $("#fb-button").click(function() {
       $("#friendsInput").autocomplete({
         source: function(req, res) {
           friendsAutocomplete = []
+          allFriends = []
           $("#friends-list").empty()
           $.getJSON('https://graph.facebook.com/'+ facebookID +'/friends?access_token='+userToken+'', function(data) {
               $.each(data.data, function(index, value) {
                 friendsAutocomplete.push(value.name)
+                allFriends.push(value.name)
                 friends[value.name] = value.id;
                 $("#friends-list").append($("<li id=facebook:" + value.id + ">" + value.name + "</li>"))
               })
@@ -43,7 +47,9 @@ $("#fb-button").click(function() {
           $("#added-friends").append(
             "<div><p><i class=\"fa fa-times\"></i>" + label + "</p></div>")
             friendsAutocomplete.splice(friendsAutocomplete.indexOf(label), 1)
+            friendsAddedList.push(label)
             $(this).autocomplete("option","source",friendsAutocomplete);
+            $("#friendsInput").val('')
             updateButton()
         }
       });
