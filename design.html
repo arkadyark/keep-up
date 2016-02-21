@@ -54,6 +54,33 @@
             <label for="exampleEmailInput">Add some tags:</label>
             <input class="u-full-width" type="text" placeholder="Start typing..." id="tagsInput">
           </form>
+
+          <script>
+          // Grab Firebase Reference
+          var myDataRef = new Firebase('keep-up.firebaseIO.com');
+
+          $('#send').click(function () {
+              console.log($('#tagsInput').val());
+              // Verify that link is valid
+
+
+              if ($("#linkInput")[0].checkValidity()) {
+                  var link = $('#linkInput').val();
+
+                  myDataRef.push($('#tagsInput').tagit('assignedTags'));
+                  
+                  $('#linkInput').val('');
+              }
+          });
+
+
+
+          myDataRef.on('child_added', function(snapshot) {
+              var message = snapshot.val();
+              displayChatMessage(message.name, message.link);
+          });
+          </script>
+
         </div>
         <div class="six columns added-friends">
           <form>
