@@ -1,3 +1,5 @@
+$('#tags').tagsInput();
+
 /*
 	jQuery Tags Input Plugin 1.3.3
 	Copyright (c) 2011 XOXCO, Inc
