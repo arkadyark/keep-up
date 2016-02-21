@@ -25,6 +25,7 @@ function showFriendPage(id) {
 
   // Get the shared items between two friends
   var friendship = $("#friendship")
+  friendship.empty()
   var friendshipRef = ref.child("users").child(userID).child("friends").child(id)
   friendshipRef.on("child_added", function(snapshot) {
     data = snapshot.val()
@@ -36,6 +37,6 @@ function showFriendPage(id) {
       linkItem.addClass('sent-by-other')
     }
     linkItem.html(data.title)
-    friendship.append(linkItem)
+    friendship.prepend(linkItem)
   })
 }
