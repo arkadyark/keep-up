@@ -126,3 +126,7 @@ label {
 .tags-input {
   margin-top: 30px;
 }
+
+#recent_articles a {
+    text-decoration: none;
+}
