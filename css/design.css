@@ -95,3 +95,7 @@ label {
   margin-top: 10px;
   float: right;
 }
+
+.tags-input {
+  margin-top: 30px; // Maybe just put it on a whole new row?
+}
