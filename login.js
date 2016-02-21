@@ -144,7 +144,7 @@ function appendArticleDiv(title, description, url, sender, tags) {
     var articleRow = $("<div/>")
     articleRow.addClass("article-row")
 
-    articleRow.append(newArticle);
+    articleRow.append(newLink);
     articleRow.append(sentBy);
 
     articleRow.attr("search-tags", title + " " + description + " " + tags.join(" "));
