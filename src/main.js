@@ -1,5 +1,4 @@
 $.getJSON('https://graph.facebook.com/'+ facebookID +'/friends?access_token='+userToken+'', function(data) {
-    console.log(data);
     var friends = $("#friends");
     $.each(data.data, function(index, value) {
       friendNode = $("<li id=facebook:" + value.id + ">" + value.name + "</li>");
