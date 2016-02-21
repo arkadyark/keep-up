@@ -14,6 +14,8 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js'></script>
   	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/themes/start/jquery-ui.css" />
+    <script type="text/javascript" src="jquery.tagsinput.js" ></script>
+    <link rel="stylesheet" type="text/css" href="jquery.tagsinput.css" />
     <script src="js/tag-it.js" type="text/javascript" charset="utf-8"></script>
 
     <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/flick/jquery-ui.css">
@@ -45,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div id="send-to" class="row send-to">
+      <div class="row send-to">
         <div class="six columns">
           <form>
             <label for="exampleEmailInput">Send to:</label>
@@ -54,6 +56,33 @@
             <label for="exampleEmailInput">Add some tags:</label>
             <input class="u-full-width" type="text" placeholder="Start typing..." id="tagsInput">
           </form>
+<<<<<<< HEAD
+
+          <script>
+          // Grab Firebase Reference
+          var myDataRef = new Firebase('keep-up.firebaseIO.com');
+
+          $('#send').click(function () {
+              console.log($('#tagsInput').val());
+              // Verify that link is valid
+
+
+              if ($("#linkInput")[0].checkValidity()) {
+                  var link = $('#linkInput').val();
+
+                  myDataRef.push($('#tagsInput').tagit('assignedTags'));
+
+                  $('#linkInput').val('');
+              }
+          });
+
+          myDataRef.on('child_added', function(snapshot) {
+              var message = snapshot.val();
+          });
+          </script>
+
+=======
+>>>>>>> 3cc923e92cf24ee538cec92a1073592cf74d30e8
         </div>
         <div class="six columns added-friends">
           <form>
@@ -61,7 +90,7 @@
             <div>
               <div id="added-friends">
               </div>
-              <button type="button" id="send-button" disabled class="send-to-selected">Send link to friend(s) <i class="fa fa-arrow-right"></i></button>
+              <button id="send-button" disabled class="send-to-selected">Send link to friend(s) <i class="fa fa-arrow-right"></i></button>
             </form>
           </div>
         </div>
@@ -98,45 +127,43 @@
             </div>
           </div>
         </div> <!-- Article 1 -->
-        <div id="recent_articles"> <!--Target to add new divs via Firebase -->
-            <div class="row"> <!-- Article 2 -->
-              <div class="article-row">
-                <div class="nine columns">
-                  <div class="article">
-                    <p class="article-title">The Female Pilots We Betrayed</p>
-                    <p class="article-author">by Sarah Byrn Rickman on NYTimes</p>
-                  </div>
-                </div>
-                <div class="three columns">
-                  <div class="collaborators">
-                    <p>With:</p>
-                  </div>
-                  <div class="collaborators names">
-                    <p><a href="#">Soheil Koushan</a>,</p>
-                    <p><a href="#">Paul Suk</a></p>
-                  </div>
-                </div>
+        <div class="row"> <!-- Article 2 -->
+          <div class="article-row">
+            <div class="nine columns">
+              <div class="article">
+                <p class="article-title">The Female Pilots We Betrayed</p>
+                <p class="article-author">by Sarah Byrn Rickman on NYTimes</p>
               </div>
-            </div> <!-- Article 2 -->
-            <div class="row"> <!-- Article 3 -->
-              <div class="article-row">
-                <div class="nine columns">
-                  <div class="article">
-                    <p class="article-title">Air Force One</p>
-                    <p class="article-author">On wikipedia.org</p>
-                  </div>
-                </div>
-                <div class="three columns">
-                  <div class="collaborators">
-                    <p>With:</p>
-                  </div>
-                  <div class="collaborators names">
-                    <p><a href="#">Arkady Arkhangorodsky</a></p>
-                  </div>
-                </div>
+            </div>
+            <div class="three columns">
+              <div class="collaborators">
+                <p>With:</p>
               </div>
-            </div> <!-- Article 3 -->
-        </div>
+              <div class="collaborators names">
+                <p><a href="#">Soheil Koushan</a>,</p>
+                <p><a href="#">Paul Suk</a></p>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Article 2 -->
+        <div class="row"> <!-- Article 3 -->
+          <div class="article-row">
+            <div class="nine columns">
+              <div class="article">
+                <p class="article-title">Air Force One</p>
+                <p class="article-author">On wikipedia.org</p>
+              </div>
+            </div>
+            <div class="three columns">
+              <div class="collaborators">
+                <p>With:</p>
+              </div>
+              <div class="collaborators names">
+                <p><a href="#">Arkady Arkhangorodsky</a></p>
+              </div>
+            </div>
+          </div>
+        </div> <!-- Article 3 -->
       </div>
     </div> <!-- .container -->
 
@@ -144,50 +171,19 @@
     <script>
 
     // Grab Firebase Reference
-    var myDataRef = new Firebase('https://keep-up.firebaseio.com/users/');
+    var myDataRef = new Firebase('https://keep-up.firebaseio.com/users/facebook%3A10154007199015712');
 
     $('#send-button').click(function () {
 
-        var userRef = myDataRef.child(userID).child("friends")
-
         // Grab URL
-        var linkText = $("#linkInput").val();
-        var linkTitle = $("#preview-title").text();
-        var linkDescription = $("#preview-description").text()
-        var linkImageLink = $("#preview-image").attr("src")
-        var tags = $("#tagsInput").tagit("assignedTags")
-        var timestamp = Date();
+        var link = $("#linkInput").val();
 
-        $.each(friendsAddedList, function(index, value) {
-          otherID = "facebook:" + friends[value]
-          var payload = {
-            date: timestamp,
-            sender: userID,
-            link: linkText,
-            title: linkTitle,
-            description: linkDescription,
-            imageLink: linkImageLink,
-            tags: tags
-          }
+        // Set the new link reference
+        myDataRef.push({"friends":link});
 
-          var ref = userRef.child(otherID)
-          ref.push(payload)
-          var ref = myDataRef.child(otherID).child("friends").child(userID)
-          ref.push(payload)
-          var ref = myDataRef.child(otherID).child("recently-shared")
-          ref.push(payload)
-        });
+        var newChild = myDataRef.child("friends");
 
-        // Clean up
-        friendsAdded = false;
-        friendsAddedList = [];
-        $("#linkInput").val('');
-        $("#share-details").hide();
-        $("#send-to").hide();
-        $("#tagsInput").tagit('removeAll')
-        $("#friendsInput").val('')
-        $("#friendsInput").autocomplete("option","source",allFriends);
-        $("#added-friends").empty()  
+        newChild.push({date: Date(), sender: "dummy", tags: $("#tagsInput").tagit("assignedTags")});
     });
     </script>
 
@@ -205,51 +201,4 @@
   </script>
   <script src="login.js"></script>
   <script src="thirtyhours.js" charset="utf-8"></script>
-
- <!-- Update to-read articles -->
-<script>
-
-    // Reference
-    var DataRef = new Firebase('https://keep-up.firebaseio.com/users/');
-    var login_user = DataRef.child(userID + "/recently-shared");
-
-    // Find relevant posts - snapshot to loop over users
-    login_user.once("value", function(snapshot)) {
-
-        // Grab the child's info
-        snapshot.forEach(function(childSnapshot)) {
-            var attributes = childSnapshot.val();
-            appendArticleDiv(attributes["title"], attributes["description"], attributes['link']);
-        }
-    }
-
-    function appendArticleDiv(title, description, url) {
-
-        var newLink = ${'<a/>'};
-        $(newLink).attr("href", url);
-
-        // Prep div + p tags
-        var newArticle = $('<div/>');
-        newArticle.addClass("article");
-
-        var newTitle = $('<p/>');
-        var newDescription = $('<p/>');
-
-        newTitle.addClass("article-title");
-        newDescription.addClass("article-author");
-
-        // Load the info in
-        newTitle.text(article);
-        newDescription.text(title);
-
-        // Append the p's -> div and div -> page
-        newTitle.appendTo(newArticle);
-        newDescription.appendTo(newArticle);
-
-        newArticle.appendTo(newLink);
-
-        newLink.appendTo($("#recent_articles"));
-      };
-</script>
-
 </html>
