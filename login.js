@@ -25,10 +25,13 @@ $("#fb-button").click(function() {
       // Populate friends list
       $("#friendsInput").autocomplete({
         source: function(req, res) {
+          friendsAutocomplete = []
+          $("#friends-list").empty()
           $.getJSON('https://graph.facebook.com/'+ facebookID +'/friends?access_token='+userToken+'', function(data) {
               $.each(data.data, function(index, value) {
                 friendsAutocomplete.push(value.name)
                 friends[value.name] = value.id;
+                $("#friends-list").append($("<li id=facebook:" + value.id + ">" + value.name + "</li>"))
               })
               res(friendsAutocomplete)
           })
