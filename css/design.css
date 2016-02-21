@@ -90,3 +90,8 @@ label {
 .collaborators {
   text-transform: uppercase;
 }
+
+.send-to-selected {
+  margin-top: 10px;
+  float: right;
+}
