@@ -1,5 +1,5 @@
-# import urllib2, bottle, json
-import urllib, bottle, json
+# import urllib22, bottle, json
+import urllib2, bottle, json
 from bs4 import BeautifulSoup
 
 url_base = "http://richpreview.com/"
@@ -12,9 +12,9 @@ def enable_cors():
 def index(url):
 
     # Grab source
-    url = urllib.unquote(url).decode('utf8')
+    url = urllib2.unquote(url).decode('utf8')
     full_url = url_base + ('?url=https://' + url).encode('utf8')
-    response = urllib.urlopen(full_url).read()
+    response = urllib2.urlopen(full_url).read()
 
     # Encoded -> parse elements out of the snippet
     soup = BeautifulSoup(response)
